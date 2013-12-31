@@ -2,7 +2,6 @@ Chameleon==2.14
 GitPython==0.3.2.RC1
 Jinja2==2.7.1
 Mako==0.9.0
--e git+git@github.com:eternnoir/MarkDM.git@e0d21f7ffd178c24181c509665952958aa8eda07#egg=MarkDM-dev
 Markdown==2.3.1
 MarkupSafe==0.18
 PasteDeploy==1.5.0
