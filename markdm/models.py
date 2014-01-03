@@ -5,6 +5,10 @@ from sqlalchemy import (
     Text,
     )
 
+from hashlib import *
+
+import os
+
 from sqlalchemy.ext.declarative import declarative_base
 
 from sqlalchemy.orm import (
@@ -26,6 +30,12 @@ DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base()
 
 
+class RootFactory(object):
+    __acl__ = [ (Allow, Everyone, 'view'),
+                (Allow, 'editors', 'edit') ]
+    def __init__(self, request):
+        pass
+
 class MyModel(Base):
     __tablename__ = 'models'
     id = Column(Integer, primary_key=True)
@@ -37,11 +47,6 @@ class Repos(Base):
     id = Column(Integer, primary_key=True)
     name = Column(Text)
 
-class RootFactory(object):
-    __acl__ = [ (Allow, Everyone, 'view'),
-                (Allow, 'group:editors', 'edit') ]
-    def __init__(self, request):
-        pass
 
 
 class Groups(Base):
@@ -69,11 +74,11 @@ class Users(Base):
 
     @classmethod
     def by_id(cls, userid):
-        return Session.query(Users).filter(Users.id==userid).first()
+        return DBSession.query(Users).filter(Users.id==userid).first()
 
     @classmethod
     def by_username(cls, username):
-        return Session.query(Users).filter(Users.username==username).first()
+        return DBSession.query(Users).filter(Users.username==username).first()
 
     def _set_password(self, password):
         hashed_password = password
@@ -86,7 +91,7 @@ class Users(Base):
         salt = sha1()
         salt.update(os.urandom(60))
         hash = sha1()
-        hash.update(password_8bit + salt.hexdigest())
+        hash.update(str(password_8bit) + str(salt.hexdigest()))
         hashed_password = salt.hexdigest() + hash.hexdigest()
 
         if not isinstance(hashed_password, unicode):

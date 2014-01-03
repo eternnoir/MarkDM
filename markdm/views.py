@@ -1,5 +1,6 @@
 from pyramid.response import Response
 from pyramid.view import view_config
+from pyramid.httpexceptions import HTTPFound
 
 from sqlalchemy.exc import DBAPIError
 
@@ -22,7 +23,7 @@ from .models import (
     )
 
 
-@view_config(route_name='home', renderer='templates/mytemplate.jinja2')
+@view_config(route_name='home', renderer='templates/mytemplate.jinja2',permission='edit')
 def my_view(request):
     try:
         one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
@@ -59,9 +60,10 @@ def login(request):
     if 'form.submitted' in request.params:
         login = request.params['login']
         password = request.params['password']
-        if USERS.get(login) == password:
+        u = Users.by_id(login)
+        if u.validate_password(password):
             headers = remember(request, login)
-            return HTTPFound(location = came_from,
+            return HTTPFound(location = '/',
                              headers = headers)
         message = 'Failed login'
 
@@ -73,8 +75,15 @@ def login(request):
         password = password,
         )
 
-@view_config(route_name='logout')
+@view_config(route_name='logout',permission='edit')
 def logout(request):
     headers = forget(request)
-    return HTTPFound(location = request.route_url('view_wiki'),
+    return HTTPFound(location = request.route_url('login'),
                      headers = headers)
+
+
+@view_config(route_name='test')
+def test(request):
+    u=Users('aa','1234')
+    DBSession.add(u)
+    return Response('add done')
