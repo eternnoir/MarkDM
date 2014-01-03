@@ -45,8 +45,8 @@ might be caused by one of the following things:
 After you fix the problem, please restart the Pyramid application to
 try it again.
 """
-@view_config(route_name='login', renderer='templates/login.pt')
-@forbidden_view_config(renderer='templates/login.pt')
+@view_config(route_name='login', renderer='templates/login.jinja2')
+@forbidden_view_config(renderer='templates/login.jinja2')
 def login(request):
     login_url = request.route_url('login')
     referrer = request.url
