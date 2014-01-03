@@ -23,7 +23,7 @@ from .models import (
     )
 
 
-@view_config(route_name='home', renderer='templates/mytemplate.jinja2',permission='edit')
+@view_config(route_name='home', renderer='templates/mytemplate.jinja2')
 def my_view(request):
     try:
         one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
