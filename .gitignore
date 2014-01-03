@@ -25,3 +25,7 @@ jyenv/
 pypyenv/
 env*/
 venv/
+
+.project
+.pydevproject
+
