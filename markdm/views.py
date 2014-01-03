@@ -14,7 +14,7 @@ from pyramid.security import (
     authenticated_userid,
     )
 
-from .security import USERS
+from .models import Users
 
 from .models import (
     DBSession,
@@ -22,7 +22,7 @@ from .models import (
     )
 
 
-@view_config(route_name='home', renderer='templates/mytemplate.pt')
+@view_config(route_name='home', renderer='templates/mytemplate.jinja2')
 def my_view(request):
     try:
         one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
@@ -35,7 +35,7 @@ Pyramid is having a problem using your SQL database.  The problem
 might be caused by one of the following things:
 
 1.  You may need to run the "initialize_MarkDM_db" script
-    to initialize your database tables.  Check your virtual
+    to initi.ptalize your database tables.  Check your virtual
     environment's "bin" directory for this script and try to run it.
 
 2.  Your database server may not be running.  Check that the
