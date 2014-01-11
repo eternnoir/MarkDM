@@ -23,6 +23,10 @@ from .models import (
     )
 
 
+@view_config(route_name='index', renderer='templates/index.jinja2')
+def index_view(request):
+    return {'title': 'MarkDM'}
+
 @view_config(route_name='home', renderer='templates/mytemplate.jinja2')
 def my_view(request):
     try:
@@ -81,9 +85,3 @@ def logout(request):
     return HTTPFound(location = request.route_url('login'),
                      headers = headers)
 
-
-@view_config(route_name='test')
-def test(request):
-    u=Users('aa','1234')
-    DBSession.add(u)
-    return Response('add done')
