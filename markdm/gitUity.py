@@ -2,6 +2,8 @@
 from git import *
 import os
 
+
+
 class gitUity:
 
     #init need repo path
@@ -32,4 +34,5 @@ class gitUity:
 
     def autoCommit(self):
         self.repo.commit('-a','-m','auto commit')
+
 
