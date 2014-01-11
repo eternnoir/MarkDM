@@ -1,25 +1,12 @@
 <!--[if HTML5]><![endif]-->
 <!DOCTYPE html>
-<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
-<!--[if lt IE 7]><html class="ie ie6 ie-lte9 ie-lte8 ie-lte7 no-js" lang="{{=T.accepted_language or 'en'}}"> <![endif]-->
-<!--[if IE 7]><html class="ie ie7 ie-lte9 ie-lte8 ie-lte7 no-js" lang="{{=T.accepted_language or 'en'}}"> <![endif]-->
-<!--[if IE 8]><html class="ie ie8 ie-lte9 ie-lte8 no-js" lang="{{=T.accepted_language or 'en'}}"> <![endif]-->
-<!--[if IE 9]><html class="ie9 ie-lte9 no-js" lang="{{=T.accepted_language or 'en'}}"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{=T.accepted_language or 'en'}}"> <!--<![endif]-->
 <head>
-<title>{{=response.title or request.application}}</title>
-<!--[if !HTML5]>
-      <meta http-equiv="X-UA-Compatible" content="IE=edge{{=not request.is_local and ',chrome=1' or ''}}">
-  <![endif]-->
-<!-- www.phpied.com/conditional-comments-block-downloads/ -->
-<!-- Always force latest IE rendering engine
-       (even in intranet) & Chrome Frame
-       Remove this if you use the .htaccess -->
+<title>{{title}}</title>
 
 <meta charset="utf-8" />
 
 <!-- http://dev.w3.org/html5/markup/meta.name.html -->
-<meta name="application-name" content="{{=request.application}}" />
+<meta name="application-name" content="MarkDM" />
 <!-- include stylesheets -->
 <style type="text/css">
 .container {
@@ -39,7 +26,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{{=URL('default','index')}}">MarkDM</a>
+        <a class="navbar-brand" href="#">MarkDM</a>
     </div>
 
 
@@ -47,8 +34,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-            <li><a href="{{=URL('default','index')}}">Home Page</a></li>
-            <li><a href="{{=URL('default','addrepo')}}">Add Repo</a></li>
+            <li><a href="{{request.route_url('home').rstrip('/')}}">Home Page</a></li>
+            <li><a href="#">Add Repo</a></li>
             <li><a href="#">OnlineEditer</a></li>
             <li><a href="#">Setting</a></li>
             <li class="dropdown">
@@ -64,8 +51,6 @@
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
             </li>
-            <!-- auth use -->
-            {{='auth' in globals() and auth.navbar(mode="dropdown") or ''}}
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>
@@ -75,9 +60,6 @@
 {% block content %}{% endblock content %}
 </div>
 <!-- /Main -->
-
-
-
 </body>
 </html>
 
