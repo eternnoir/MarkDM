@@ -16,6 +16,7 @@ from pyramid.security import (
     )
 
 from .models import Users
+from .models import Groups
 
 from .models import (
     DBSession,
@@ -64,7 +65,7 @@ def login(request):
     if 'form.submitted' in request.params:
         login = request.params['login']
         password = request.params['password']
-        u = Users.by_id(login)
+        u = Users.by_username(login)
         if u.validate_password(password):
             headers = remember(request, login)
             return HTTPFound(location = '/',

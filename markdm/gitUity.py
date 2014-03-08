@@ -20,7 +20,7 @@ class gitUity:
         return self.repo.status()
 
     def setRemote(self,rName,remote):
-        self.repo.add.remote(Name,remote)
+        self.repo.add.remote(rName,remote)
 
     def clone(self,remote):
         self.clone(remote,'')
